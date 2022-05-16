@@ -1,6 +1,3 @@
-//
-// Created by Ilya on 15.05.2022.
-//
 #include "gtkmm.h"
 #include <iostream>
 
@@ -12,8 +9,11 @@ int main(int argc, char **argv) {
     Gtk::ApplicationWindow *window;
     ui->get_widget("window", window);
 
-    Gtk::Box *NoteBook;
-    ui->get_widget("NoteBook", NoteBook);
+    Gtk::Box *main_box;
+    ui->get_widget("main_box", main_box);
+    Gtk::Entry *input = ;
+    ui->get_widget("input", input);
+    main_box.add(input);
 
     return app->run(*window);
 }
