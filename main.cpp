@@ -1,11 +1,36 @@
 #include "gtkmm.h"
 #include <iostream>
 
-void on_btn_click(Gtk::Label *lbl) {
-    std::string temp = lbl->get_text();
-    temp = "changed";
+void on_del_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text(); // realise functional
+    temp = "del";
     lbl->set_label(temp);
 }
+
+void on_left_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text();
+    temp = "<-";
+    lbl->set_label(temp);
+}
+
+void on_save_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text();
+    temp = "save";
+    lbl->set_label(temp);
+}
+
+void on_right_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text();
+    temp = "->";
+    lbl->set_label(temp);
+}
+
+void on_create_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text();
+    temp = "create";
+    lbl->set_label(temp);
+}
+
 int main(int argc, char **argv) {
     auto app = Gtk::Application::create(argc, argv);
     auto ui = Gtk::Builder::create_from_file("design.glade");
@@ -32,6 +57,11 @@ int main(int argc, char **argv) {
     Gtk::Button *create_btn;
     ui->get_widget("create_btn", create_btn);
 
-    create_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_btn_click), lbl));
+    del_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_del_btn_click), lbl));
+    left_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_left_btn_click), lbl));
+    save_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_save_btn_click), lbl));
+    right_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_right_btn_click), lbl));
+    create_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_create_btn_click), lbl));
+
     return app->run(*window);
 }
