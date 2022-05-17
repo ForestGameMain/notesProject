@@ -13,7 +13,7 @@ def return_note_by_number():
     pass
 
 
-def save_note_by_number():
+def save_note_by_number(text_note, id_note):
     pass
 
 
@@ -32,9 +32,12 @@ def main(args):
     elif e == "del":
         pass
     elif e == "get":
-        pass
+        geted_note = return_note_by_number()
     elif e == "save":
-        pass
+        new_note = str()
+        for i in args:
+            new_note += str(i) + " "
+        save_note_by_number(new_note, id_note)
     else:
         print("command error")
 
