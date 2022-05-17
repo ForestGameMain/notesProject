@@ -1,7 +1,11 @@
 #include "gtkmm.h"
 #include <iostream>
 
-
+void on_btn_click(Gtk::Label *lbl) {
+    std::string temp = lbl->get_text();
+    temp = "changed";
+    lbl->set_label(temp);
+}
 int main(int argc, char **argv) {
     auto app = Gtk::Application::create(argc, argv);
     auto ui = Gtk::Builder::create_from_file("design.glade");
@@ -12,34 +16,22 @@ int main(int argc, char **argv) {
     Gtk::Box *main_box;
     ui->get_widget("main_box", main_box);
 
-    Gtk::Label lbl("1");
-    main_box->add(lbl);
-    lbl.show();
+    Gtk::Label *lbl;
+    ui->get_widget("lbl", lbl);
 
-    Gtk::Entry input;
-    main_box->add(input);
-    input.show();
+    Gtk::Entry *input;
+    ui->get_widget("input", input);
+    Gtk::Button *del_btn;
+    ui->get_widget("del_btn", del_btn);
+    Gtk::Button *left_btn;
+    ui->get_widget("left_btn", left_btn);
+    Gtk::Button *save_btn;
+    ui->get_widget("save_btn", save_btn);
+    Gtk::Button *right_btn;
+    ui->get_widget("right_btn", right_btn);
+    Gtk::Button *create_btn;
+    ui->get_widget("create_btn", create_btn);
 
-    Gtk::Box button_box;
-    Gtk::Button del_btn("Удалить");
-    Gtk::Button left_btn("<-");
-    Gtk::Button save_btn("Сохранить");
-    Gtk::Button right_btn("->");
-    Gtk::Button create_btn("Создать");
-
-    button_box.add(del_btn);
-    button_box.add(left_btn);
-    button_box.add(save_btn);
-    button_box.add(right_btn);
-    button_box.add(create_btn);
-    main_box->add(button_box);
-
-    del_btn.show();
-    left_btn.show();
-    save_btn.show();
-    right_btn.show();
-    create_btn.show();
-    button_box.show();
-
+    create_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_btn_click), lbl));
     return app->run(*window);
 }
