@@ -28,6 +28,7 @@ void on_right_btn_click(Gtk::Label *lbl) {
 void on_create_btn_click(Gtk::Label *lbl) {
     std::string temp = lbl->get_text();
     temp = "create";
+    system("python main.py");
     lbl->set_label(temp);
 }
 
