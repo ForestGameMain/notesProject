@@ -3,31 +3,35 @@
 
 int count_page;
 
-void on_del_btn_click(Gtk::Label *lbl) {
-    std::string temp = lbl->get_text(); // realise functional
-    temp = "del";
-    lbl->set_label(temp);
+void on_del_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
+    std::string temp = ""; // realise functional
+    if (count_page <= 0) return;
+    count_page -= 1;
+    lbl->set_text(std::to_string(count_page));
+    lbl->set_label(std::to_string(count_page));
+
+    input->set_text(std::to_string(count_page));
 }
 
-void on_left_btn_click(Gtk::Label *lbl) {
+void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     std::string temp = lbl->get_text();
     temp = "<-";
     lbl->set_label(temp);
 }
 
-void on_save_btn_click(Gtk::Label *lbl) {
+void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     std::string temp = lbl->get_text();
     temp = "save";
     lbl->set_label(temp);
 }
 
-void on_right_btn_click(Gtk::Label *lbl) {
+void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     std::string temp = lbl->get_text();
     temp = "->";
     lbl->set_label(temp);
 }
 
-void on_create_btn_click(Gtk::Label *lbl) {
+void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     std::string temp = "create";
     system("python main.py example");
 
@@ -62,11 +66,11 @@ int main(int argc, char **argv) {
     Gtk::Button *create_btn;
     ui->get_widget("create_btn", create_btn);
 
-    del_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_del_btn_click), lbl));
-    left_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_left_btn_click), lbl));
-    save_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_save_btn_click), lbl));
-    right_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_right_btn_click), lbl));
-    create_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_create_btn_click), lbl));
+    del_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_del_btn_click), lbl, input));
+    left_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_left_btn_click), lbl, input));
+    save_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_save_btn_click), lbl, input));
+    right_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_right_btn_click), lbl, input));
+    create_btn->signal_clicked().connect(sigc::bind(sigc::ptr_fun(&on_create_btn_click), lbl, input));
 
     return app->run(*window);
 }
