@@ -1,6 +1,8 @@
 #include "gtkmm.h"
 #include <iostream>
 
+int count_page;
+
 void on_del_btn_click(Gtk::Label *lbl) {
     std::string temp = lbl->get_text(); // realise functional
     temp = "del";
@@ -26,15 +28,17 @@ void on_right_btn_click(Gtk::Label *lbl) {
 }
 
 void on_create_btn_click(Gtk::Label *lbl) {
-    std::string temp = lbl->get_text();
-    temp = "create";
-    system("python main.py");
+    std::string temp = "create";
+    system("python main.py example");
+
     lbl->set_label(temp);
 }
 
 int main(int argc, char **argv) {
     auto app = Gtk::Application::create(argc, argv);
     auto ui = Gtk::Builder::create_from_file("design.glade");
+
+    count_page = 1;
 
     Gtk::ApplicationWindow *window;
     ui->get_widget("window", window);

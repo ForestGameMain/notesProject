@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(notesProject
         main.cpp
-        README.md
+        cmake-build-debug/main.py
         cmake-build-debug/design.glade
         )
 
