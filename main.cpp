@@ -20,8 +20,10 @@ void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 }
 
 void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    std::string temp = lbl->get_text();
-    temp = "save";
+    Glib::ustring temp = "python main.py add ";
+    temp += input->get_text();
+    system(temp.c_str());
+
     lbl->set_label(temp);
 }
 
@@ -32,10 +34,11 @@ void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 }
 
 void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    std::string temp = "create";
-    system("python main.py example");
+    //const char *temp = "python main.py add ";
+    //temp  input->get_text();
+    //system(temp);
 
-    lbl->set_label(temp);
+    //lbl->set_label(temp);
 }
 
 int main(int argc, char **argv) {
