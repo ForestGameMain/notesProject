@@ -3,16 +3,21 @@ import sqlite3
 import datetime
 
 
-def add_note(text_note, id_note):
-    pass
+def delete_note(id_note):
+    conn = sqlite3.connect('notes.db')
+    cur = conn.cursor()
+    cur.execute("DELETE FROM notes WHERE id == ? ", (id_note,))
+    conn.commit()
+    print("delete sucessful")
 
 
-def delete_note():
-    pass
-
-
-def return_note_by_number():
-    pass
+def return_note_by_id(id_note):
+    conn = sqlite3.connect('notes.db')
+    cur = conn.cursor()
+    cur.execute("SELECT text FROM notes WHERE id == ? ", (id_note,))
+    result = cur.fetchall()
+    print("search sucessful")
+    return result
 
 
 def save_note(text_note, id_note):
@@ -26,7 +31,7 @@ def save_note(text_note, id_note):
     print("saved")
 
 
-def get_next_id():
+def get_next_id_for_cpp():
     conn = sqlite3.connect('notes.db')
     cur = conn.cursor()
     cur.execute("SELECT id FROM notes")
@@ -38,22 +43,55 @@ def get_next_id():
     with open("ids.txt", 'w') as f:
         for id in format_ids:
             f.write(str(id) + " ")
-    return 1
+
+
+def get_id_for_py():
+    conn = sqlite3.connect('notes.db')
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM notes")
+    ids = cur.fetchall()
+    return ids
 
 
 def main(args):
     args = args[1:]
 
     e = args[0]
-    # id_note = get_next_id()
     args = args[1:]
 
     if e == "add":
-        get_next_id()
+        get_next_id_for_cpp()
     elif e == "del":
-        pass
-    elif e == "get":
-        geted_note = return_note_by_number()
+        delete_note(args[0])
+    elif e == "getr":
+        geted_note = ""
+        left_id = -1
+        ids = get_id_for_py()
+        print(ids)
+        for unf_id in ids:
+            for id in unf_id:
+                if id > int(args[0]):
+                    geted_note = return_note_by_id(id)
+                    left_id = id
+                    print(*geted_note)
+                    break
+        print(left_id)
+    elif e == "getl":
+        geted_note = ""
+        right_id = -1
+        ids = get_id_for_py()
+        ids = ids[::-1]
+        print(ids)
+        flag = 0
+        for unf_id in ids:
+            if flag:
+                for id in unf_id:
+                    if id < int(args[0]):
+                        geted_note = return_note_by_id(id)
+                        right_id = id
+                        print(*geted_note)
+                        flag = 0
+        print(right_id)
     elif e == "save":
         print("saving...")
         new_note = str()

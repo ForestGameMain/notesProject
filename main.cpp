@@ -6,22 +6,21 @@
 int count_page;
 
 void on_del_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    std::string temp = ""; // realise functional
-    if (count_page <= 0) return;
-    count_page -= 1;
-    lbl->set_text(std::to_string(count_page));
-    lbl->set_label(std::to_string(count_page));
-
-    input->set_text(std::to_string(count_page));
+    Glib::ustring temp = "python main.py del ";
+    temp += lbl->get_text();
+    system(temp.c_str());
+    std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
 }
 
 void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    std::string temp = lbl->get_text();
-    temp = "<-";
-    lbl->set_label(temp);
+    Glib::ustring temp = "python main.py getl ";
+    temp += lbl->get_text();
+    temp += " ";
+    system(temp.c_str());
+    std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
 }
 
-void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
+void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) { // сохранение в БД под тем же idшником, старое сохранение стерается
     Glib::ustring temp = "python main.py save ";
     temp += lbl->get_text();
     temp += " ";
@@ -31,12 +30,14 @@ void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 }
 
 void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    std::string temp = lbl->get_text();
-    temp = "->";
-    lbl->set_label(temp);
+    Glib::ustring temp = "python main.py getr ";
+    temp += lbl->get_text();
+    temp += " ";
+    system(temp.c_str());
+    std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
 }
 
-void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
+void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) { // лучше не вдумываться что за бред тут написан, но он работает
     const char *temp = "python main.py add ";
     system(temp);
     std::fstream fs;
@@ -49,16 +50,16 @@ void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     file << "";
     std::set<int> format_ids;
     std::string t = "";
-    for(int i = 0; i < ids.size(); ++i) {
+    for (int i = 0; i < ids.size(); ++i) {
         t += ids[i];
-        if(ids[i] == ' ') {
+        if (ids[i] == ' ') {
             format_ids.insert(std::stoi(t));
             t = "";
         }
     }
     int id = 1;
-    while(format_ids.count(id)) {
-        id ++;
+    while (format_ids.count(id)) {
+        id++;
     }
 
     lbl->set_label(std::to_string(id));
