@@ -20,11 +20,13 @@ void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 }
 
 void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    Glib::ustring temp = "python main.py add ";
+    Glib::ustring temp = "python main.py save ";
+    temp += lbl->get_text();
+    temp += " ";
     temp += input->get_text();
     system(temp.c_str());
 
-    lbl->set_label(temp);
+    //lbl->set_label(temp);
 }
 
 void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
