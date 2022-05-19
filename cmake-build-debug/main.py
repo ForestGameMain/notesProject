@@ -78,6 +78,9 @@ def main(args):
                         print(*geted_note)
                         flag = 0
         print(right_id)
+        with open("ids.txt", 'w') as f:
+            f.write(str(right_id) + " ")
+            f.write(str(*geted_note)[2: -3])
     elif e == "getl":
         geted_note = ""
         left_id = -1
@@ -94,6 +97,9 @@ def main(args):
                         print(*geted_note)
                         flag = 0
         print(left_id)
+        with open("ids.txt", 'w') as f:
+            f.write(str(left_id) + " ")
+            f.write(str(*geted_note)[2: -3])
     elif e == "save":
         print("saving...")
         new_note = str()
