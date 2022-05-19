@@ -116,6 +116,9 @@ def main(args):
         for i in args:
             new_note += str(i) + " "
         save_note(new_note, id_note)
+    elif e == "start":
+        with open("ids.txt", 'w') as f:
+            f.write(str(return_note_by_id(1)[0][0]))
     else:
         print("command error")
 

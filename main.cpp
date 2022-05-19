@@ -107,6 +107,22 @@ void on_create_btn_click(Gtk::Label *lbl,
     input->set_text("new note");
 }
 
+void on_start(Gtk::Label *lbl, Gtk::Entry *input) {
+    Glib::ustring temp = "python main.py start ";
+    system(temp.c_str());
+    std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
+    std::fstream fs;
+    fs.open("ids.txt");
+    std::string ids;
+    std::getline(fs, ids);
+    fs.close();
+    std::ofstream file("ids.txt");
+    file << "";
+    std::set<int> format_ids;
+    std::string t = "";
+    input->set_text(ids);
+}
+
 int main(int argc, char **argv) {
     auto app = Gtk::Application::create(argc, argv);
     auto ui = Gtk::Builder::create_from_file("design.glade");
@@ -122,6 +138,8 @@ int main(int argc, char **argv) {
 
     Gtk::Entry *input;
     ui->get_widget("input", input);
+    input->set_text("Your note here");
+    on_start(lbl, input);
     Gtk::Button *del_btn;
     ui->get_widget("del_btn", del_btn);
     Gtk::Button *left_btn;
