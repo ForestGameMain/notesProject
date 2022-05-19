@@ -65,33 +65,35 @@ def main(args):
         delete_note(args[0])
     elif e == "getr":
         geted_note = ""
-        left_id = -1
-        ids = get_id_for_py()
-        print(ids)
-        for unf_id in ids:
-            for id in unf_id:
-                if id > int(args[0]):
-                    geted_note = return_note_by_id(id)
-                    left_id = id
-                    print(*geted_note)
-                    break
-        print(left_id)
-    elif e == "getl":
-        geted_note = ""
         right_id = -1
         ids = get_id_for_py()
-        ids = ids[::-1]
         print(ids)
-        flag = 0
+        flag = 1
         for unf_id in ids:
             if flag:
                 for id in unf_id:
-                    if id < int(args[0]):
+                    if id > int(args[0]):
                         geted_note = return_note_by_id(id)
                         right_id = id
                         print(*geted_note)
                         flag = 0
         print(right_id)
+    elif e == "getl":
+        geted_note = ""
+        left_id = -1
+        ids = get_id_for_py()
+        ids = ids[::-1]
+        print(ids)
+        flag = 1
+        for unf_id in ids:
+            if flag:
+                for id in unf_id:
+                    if id < int(args[0]):
+                        geted_note = return_note_by_id(id)
+                        left_id = id
+                        print(*geted_note)
+                        flag = 0
+        print(left_id)
     elif e == "save":
         print("saving...")
         new_note = str()
