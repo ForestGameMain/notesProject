@@ -47,20 +47,21 @@ void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     fs.close();
     std::ofstream file("ids.txt");
     file << "";
-    std::vector<int> format_ids;
+    std::set<int> format_ids;
     std::string t = "";
     for(int i = 0; i < ids.size(); ++i) {
         t += ids[i];
         if(ids[i] == ' ') {
-            format_ids.push_back(std::stoi(t));
+            format_ids.insert(std::stoi(t));
             t = "";
         }
     }
-
-    for (auto e: format_ids) {
-        std::cout << e << " ";
+    int id = 1;
+    while(format_ids.count(id)) {
+        id ++;
     }
-    lbl->set_label(temp);
+
+    lbl->set_label(std::to_string(id));
 }
 
 int main(int argc, char **argv) {
