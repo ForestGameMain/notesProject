@@ -79,8 +79,12 @@ def main(args):
                         flag = 0
         print(right_id)
         with open("ids.txt", 'w') as f:
-            f.write(str(right_id) + " ")
-            f.write(str(*geted_note)[2: -3])
+            if right_id != -1:
+                f.write(str(right_id) + " ")
+                f.write(str(*geted_note)[2: -3])
+            else:
+                f.write(str(int(str(ids[-1])[1:-2]) + 1) + " ")
+                f.write("this note not exists, press <-")
     elif e == "getl":
         geted_note = ""
         left_id = -1
@@ -98,8 +102,12 @@ def main(args):
                         flag = 0
         print(left_id)
         with open("ids.txt", 'w') as f:
-            f.write(str(left_id) + " ")
-            f.write(str(*geted_note)[2: -3])
+            if left_id != -1:
+                f.write(str(left_id) + " ")
+                f.write(str(*geted_note)[2: -3])
+            else:
+                f.write(str(int(str(ids[-1])[1:-2]) - 1) + " ")
+                f.write("this note not exists, press ->")
     elif e == "save":
         print("saving...")
         new_note = str()

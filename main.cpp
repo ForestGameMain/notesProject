@@ -1,15 +1,13 @@
 #include "gtkmm.h"
 #include <iostream>
 #include <fstream>
-#include "windows.h"
-
-int count_page;
 
 void on_del_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     Glib::ustring temp = "python main.py del ";
     temp += lbl->get_text();
     system(temp.c_str());
     std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
+    input->set_text("this note was deleted, press <- or ->");
 }
 
 void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
@@ -18,9 +16,31 @@ void on_left_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     temp += " ";
     system(temp.c_str());
     std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
+    std::fstream fs;
+    fs.open("ids.txt");
+    std::string text;
+    std::getline(fs, text);
+    fs.close();
+    std::ofstream file("ids.txt");
+    file << "";
+    std::string for_label = "", note = "";
+    int flag = 1;
+    for (int i = 0; i < text.size(); ++i) {
+        if (flag) {
+            for_label += text[i];
+        } else {
+            note += text[i];
+        }
+        if (text[i] == ' ') {
+            flag = 0;
+        }
+    }
+    lbl->set_text(for_label);
+    input->set_text(note);
 }
 
-void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) { // сохранение в БД под тем же idшником, старое сохранение стерается
+void on_save_btn_click(Gtk::Label *lbl,
+                       Gtk::Entry *input) { // сохранение в БД под тем же idшником, старое сохранение стерается
     Glib::ustring temp = "python main.py save ";
     temp += lbl->get_text();
     temp += " ";
@@ -35,16 +55,37 @@ void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     temp += " ";
     system(temp.c_str());
     std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
+    std::fstream fs;
+    fs.open("ids.txt");
+    std::string text;
+    std::getline(fs, text);
+    fs.close();
+    std::ofstream file("ids.txt");
+    file << "";
+    std::string for_label = "", note = "";
+    int flag = 1;
+    for (int i = 0; i < text.size(); ++i) {
+        if (flag) {
+            for_label += text[i];
+        } else {
+            note += text[i];
+        }
+        if (text[i] == ' ') {
+            flag = 0;
+        }
+    }
+    lbl->set_text(for_label);
+    input->set_text(note);
 }
 
-void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) { // лучше не вдумываться что за бред тут написан, но он работает
+void on_create_btn_click(Gtk::Label *lbl,
+                         Gtk::Entry *input) { // лучше не вдумываться что за бред тут написан, но он работает
     const char *temp = "python main.py add ";
     system(temp);
     std::fstream fs;
     fs.open("ids.txt");
     std::string ids;
     std::getline(fs, ids);
-    // std::cout<<ids;
     fs.close();
     std::ofstream file("ids.txt");
     file << "";
@@ -62,14 +103,13 @@ void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) { // лучше н�
         id++;
     }
 
-    lbl->set_label(std::to_string(id));
+    lbl->set_text(std::to_string(id));
+    input->set_text("new note");
 }
 
 int main(int argc, char **argv) {
     auto app = Gtk::Application::create(argc, argv);
     auto ui = Gtk::Builder::create_from_file("design.glade");
-
-    count_page = 1;
 
     Gtk::ApplicationWindow *window;
     ui->get_widget("window", window);
