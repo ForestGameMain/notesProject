@@ -1,5 +1,7 @@
 #include "gtkmm.h"
 #include <iostream>
+#include <fstream>
+#include "windows.h"
 
 int count_page;
 
@@ -25,8 +27,7 @@ void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     temp += " ";
     temp += input->get_text();
     system(temp.c_str());
-
-    //lbl->set_label(temp);
+    std::cout<<"PYTHON CODE EXIT WITHOUT ERRORS\n";
 }
 
 void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
@@ -36,11 +37,15 @@ void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 }
 
 void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
-    //const char *temp = "python main.py add ";
-    //temp  input->get_text();
-    //system(temp);
-
-    //lbl->set_label(temp);
+    const char *temp = "python main.py add ";
+    system(temp);
+    std::fstream fs;        // поток для чтения-записи
+    fs.open("cmake-build-debug\ids.txt");
+    std::string ids;
+    std::getline(fs, ids);
+    std::cout<<ids;
+    //получить значение id следующей заметки и вставить в label
+    lbl->set_label(temp);
 }
 
 int main(int argc, char **argv) {

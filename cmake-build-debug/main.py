@@ -2,6 +2,7 @@ import sys
 import sqlite3
 import datetime
 
+
 def add_note(text_note, id_note):
     pass
 
@@ -28,10 +29,16 @@ def save_note(text_note, id_note):
 def get_next_id():
     conn = sqlite3.connect('notes.db')
     cur = conn.cursor()
-    cur.execute("DELETE FROM notes WHERE id == ? ", )
-    conn.commit()
-    cur.execute("SELECT id FROM notes ORDER BY id")
-    print(cur.fetchmany())
+    cur.execute("SELECT id FROM notes")
+    ids = cur.fetchall()
+    format_ids = list()
+    for unformat_id in ids:
+        for id in unformat_id:
+            format_ids.append(id)
+    with open("ids.txt", 'w') as f:
+        for id in format_ids:
+            f.write(str(id) + " ")
+    # из этого print получить значения
     return 1
 
 
@@ -43,7 +50,7 @@ def main(args):
     args = args[1:]
 
     if e == "add":
-        pass
+        get_next_id()
     elif e == "del":
         pass
     elif e == "get":
