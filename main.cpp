@@ -27,7 +27,7 @@ void on_save_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     temp += " ";
     temp += input->get_text();
     system(temp.c_str());
-    std::cout<<"PYTHON CODE EXIT WITHOUT ERRORS\n";
+    std::cout << "PYTHON CODE EXIT WITHOUT ERRORS\n";
 }
 
 void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
@@ -39,12 +39,27 @@ void on_right_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
 void on_create_btn_click(Gtk::Label *lbl, Gtk::Entry *input) {
     const char *temp = "python main.py add ";
     system(temp);
-    std::fstream fs;        // поток для чтения-записи
-    fs.open("cmake-build-debug\ids.txt");
+    std::fstream fs;
+    fs.open("ids.txt");
     std::string ids;
     std::getline(fs, ids);
-    std::cout<<ids;
-    //получить значение id следующей заметки и вставить в label
+    // std::cout<<ids;
+    fs.close();
+    std::ofstream file("ids.txt");
+    file << "";
+    std::vector<int> format_ids;
+    std::string t = "";
+    for(int i = 0; i < ids.size(); ++i) {
+        t += ids[i];
+        if(ids[i] == ' ') {
+            format_ids.push_back(std::stoi(t));
+            t = "";
+        }
+    }
+
+    for (auto e: format_ids) {
+        std::cout << e << " ";
+    }
     lbl->set_label(temp);
 }
 

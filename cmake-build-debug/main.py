@@ -38,7 +38,6 @@ def get_next_id():
     with open("ids.txt", 'w') as f:
         for id in format_ids:
             f.write(str(id) + " ")
-    # из этого print получить значения
     return 1
 
 
